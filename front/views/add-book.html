@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/styles.css" />
+  <title>Agregar Libro</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Registrar Libro</h1>
+    <form id="bookForm">
+      <input type="text" id="title" placeholder="Título del libro" required autofocus />
+      <input type="text" id="author" placeholder="Autor" required />
+      <input type="text" id="year" placeholder="Año" required />
+      <input type="text" id="category" placeholder="Categoría" required />
+      <button type="submit">Guardar</button>
+      <p id="mensaje" class="mensaje"></p>
+    </form>
+    <p><a href="menu.html">Volver al menú</a></p>
+  </div>
+  <script type="module" src="../controllers/add-book.controller.js"></script>
+</body>
+</html>

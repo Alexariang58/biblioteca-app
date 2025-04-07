@@ -1,0 +1,8 @@
+{
+  "books": [
+    { "id": 1, "titulo": "Cien Años de Soledad", "estado": "disponible" },
+    { "id": 2, "titulo": "1984", "estado": "prestado" }
+  ],
+  "historial": [],
+  "colaEspera": []
+}

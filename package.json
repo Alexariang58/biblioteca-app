@@ -1,0 +1,11 @@
+{
+  "name": "biblioteca-app",
+  "version": "1.0.0",
+  "main": "front/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^35.1.4"
+  }
+}
