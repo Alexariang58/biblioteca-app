@@ -1,11 +1,14 @@
 {
   "name": "biblioteca-app",
   "version": "1.0.0",
-  "main": "front/main.js",
+  "description": "Aplicación de biblioteca con Electron, NestJS (back) y JS/HTML (front)",
   "scripts": {
-    "start": "electron ."
+    "start": "concurrently \"yarn --cwd back start\" \"yarn --cwd front start\"",
+    "start:back": "yarn --cwd back start",
+    "start:front": "yarn --cwd front start",
+    "build:back": "yarn --cwd back build"
   },
   "devDependencies": {
-    "electron": "^35.1.4"
+    "concurrently": "^9.1.2"
   }
 }

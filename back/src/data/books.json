@@ -1,8 +1,84 @@
 {
-  "books": [
-    { "id": 1, "titulo": "Cien Años de Soledad", "estado": "disponible" },
-    { "id": 2, "titulo": "1984", "estado": "prestado" }
-  ],
+  "books": [  {
+    "id": 1,
+    "title": "Cien años de soledad",
+    "author": "Gabriel García Márquez",
+    "year": 1966,
+    "category": "Novela",
+    "estado": "disponible"
+  },
+  {
+    "id": 2,
+    "title": "1984",
+    "author": "George Orwell",
+    "year": 1949,
+    "category": "Distopía",
+    "estado": "prestado"
+  },
+  {
+    "id": 3,
+    "title": "Don Quijote de la Mancha",
+    "author": "Miguel de Cervantes",
+    "year": 1605,
+    "category": "Clásico",
+    "estado": "disponible"
+  },
+  {
+    "id": 4,
+    "title": "El amor en los tiempos del cólera",
+    "author": "Gabriel García Márquez",
+    "year": 1985,
+    "category": "Romance",
+    "estado": "disponible"
+  },
+  {
+    "id": 5,
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "year": 1953,
+    "category": "Ciencia ficción",
+    "estado": "prestado"
+  },
+  {
+    "id": 6,
+    "title": "Orgullo y prejuicio",
+    "author": "Jane Austen",
+    "year": 1813,
+    "category": "Romance",
+    "estado": "disponible"
+  },
+  {
+    "id": 7,
+    "title": "Crónica de una muerte anunciada",
+    "author": "Gabriel García Márquez",
+    "year": 1981,
+    "category": "Novela",
+    "estado": "disponible"
+  },
+  {
+    "id": 8,
+    "title": "La sombra del viento",
+    "author": "Carlos Ruiz Zafón",
+    "year": 2001,
+    "category": "Misterio",
+    "estado": "prestado"
+  },
+  {
+    "id": 9,
+    "title": "Rayuela",
+    "author": "Julio Cortázar",
+    "year": 1963,
+    "category": "Experimental",
+    "estado": "disponible"
+  },
+  {
+    "id": 10,
+    "title": "El principito",
+    "author": "Antoine de Saint-Exupéry",
+    "year": 1943,
+    "category": "Fábula",
+    "estado": "disponible"
+  }],
   "historial": [],
   "colaEspera": []
 }

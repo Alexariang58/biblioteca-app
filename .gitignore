@@ -1,6 +1,7 @@
 # compiled output
 back/dist
 back/node_modules
+front/node_modules
 /node_modules
 /build
 
