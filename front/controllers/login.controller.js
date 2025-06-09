@@ -15,10 +15,11 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user, pass }),
+      body: JSON.stringify({ username: user, password: pass }),
     });
-
     if (response.ok) {
+      const data = await response.json(); 
+      localStorage.setItem("username", user);
       mostrarMensaje("Inicio de sesión exitoso", "success");
       setTimeout(() => {
         window.location.href = "menu.html";

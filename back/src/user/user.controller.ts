@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, UnauthorizedException, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -13,11 +13,24 @@ export class UserController {
   @Post('login')
   login(@Body() body: { username: string; password: string }) {
     const success = this.userService.login(body.username, body.password);
-    return { success };
+    if (success) {
+      return { success: true };
+    } else {
+      throw new UnauthorizedException('Credenciales incorrectas');
+    }
   }
 
   @Get()
   getAll() {
     return this.userService.getAll();
+  }
+
+  @Get('username/:username')
+  getByUsername(@Param('username') username: string) {
+    const user = this.userService.getByUsername(username);
+    if (!user) {
+      throw new UnauthorizedException('Usuario no encontrado');
+    }
+    return user;
   }
 }

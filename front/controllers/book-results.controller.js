@@ -36,9 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", async () => {
       const bookId = btn.getAttribute("data-id");
       const estado = btn.getAttribute("data-estado");
+      const username = localStorage.getItem('username');
 
       if (estado === "disponible") {
-        const result = await changeBookState(bookId, "prestado");
+        const result = await changeBookState(bookId, "prestado", username);
         if (result.success) {
           alert("📚 Puedes llevarte tu libro. Tienes un plazo de entrega de 30 días.");
           window.location.href = "menu.html";
@@ -48,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (estado === "prestado") {
         const confirmacion = confirm("🚫 El libro está prestado. ¿Quieres unirte a la lista de espera?");
         if (confirmacion) {
-          const result = await addToWaitlist(bookId);
+          const result = await addToWaitlist(bookId, username);
           if (result.success) {
             alert("✅ Has sido agregado a la lista de espera.");
             window.location.href = "menu.html";

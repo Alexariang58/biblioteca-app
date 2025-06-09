@@ -8,6 +8,8 @@ export class BookService {
   private books: Book[] = [];
   private history: Book[] = []; // Pila
   private waitlist: Book[] = []; // Cola
+  private graph: Map<string, Set<number>> = new Map(); // userId → Set<bookId>
+
   private booksPath = path.join(process.cwd(), 'dist', 'data', 'books.json');
 
   constructor() {
@@ -24,25 +26,41 @@ export class BookService {
         this.waitlist = Array.isArray(parsed.colaEspera)
           ? parsed.colaEspera
           : [];
+
+        // 🔗 Cargar interacciones (grafo)
+        if (parsed.interacciones) {
+          for (const [userId, bookIds] of Object.entries(parsed.interacciones)) {
+            this.graph.set(userId, new Set(bookIds as number[]));
+          }
+        }
       } catch (err) {
         console.error('Error al parsear el archivo JSON:', err.message);
         this.books = [];
         this.history = [];
         this.waitlist = [];
+        this.graph = new Map();
       }
     } else {
       this.books = [];
       this.history = [];
       this.waitlist = [];
+      this.graph = new Map();
     }
   }
 
   private saveBooksToFile() {
+    const interacciones = {};
+    this.graph.forEach((books, userId) => {
+      interacciones[userId] = Array.from(books);
+    });
+
     const data = {
       books: this.books,
       historial: this.history,
       colaEspera: this.waitlist,
+      interacciones: interacciones,
     };
+
     fs.writeFileSync(this.booksPath, JSON.stringify(data, null, 2));
   }
 
@@ -73,10 +91,11 @@ export class BookService {
     );
   }
 
-  addToHistory(bookId: number): void {
+  addToHistory(bookId: number, userId: string = 'usuario-default'): void {
     const book = this.books.find((b) => b.id === bookId);
     if (book) {
-      this.history.push(book); // Pila (Stack)
+      this.history.push(book); // Pila
+      this.addInteraction(userId, bookId); // 🔗 Añadir relación al grafo
       this.saveBooksToFile();
     }
   }
@@ -84,7 +103,7 @@ export class BookService {
   addToWaitlist(bookId: number): void {
     const book = this.books.find((b) => b.id === bookId);
     if (book) {
-      this.waitlist.push(book); // Cola (Queue)
+      this.waitlist.push(book); // Cola
       this.saveBooksToFile();
     }
   }
@@ -98,10 +117,35 @@ export class BookService {
   }
 
   getHistory(): Book[] {
-    return [...this.history].reverse(); // Últimos al principio
+    return [...this.history].reverse();
   }
 
   getWaitlist(): Book[] {
     return this.waitlist;
+  }
+
+  // ✅ Métodos del grafo de interacciones
+
+  addInteraction(userId: string, bookId: number): void {
+    if (!this.graph.has(userId)) {
+      this.graph.set(userId, new Set());
+    }
+    this.graph.get(userId).add(bookId);
+    this.saveBooksToFile();
+  }
+
+  getBooksByUser(userId: string): Book[] {
+    const bookIds = this.graph.get(userId) || new Set();
+    return this.books.filter(book => bookIds.has(book.id));
+  }
+
+  getUsersByBook(bookId: number): string[] {
+    const result: string[] = [];
+    for (const [userId, bookIds] of this.graph.entries()) {
+      if (bookIds.has(bookId)) {
+        result.push(userId);
+      }
+    }
+    return result;
   }
 }

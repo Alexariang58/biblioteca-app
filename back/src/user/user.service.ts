@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from './user.model';
 import * as fs from 'fs';
 import * as path from 'path';
+import { log } from 'console';
 
 @Injectable()
 export class UserService {
@@ -15,6 +16,7 @@ export class UserService {
   private loadUsers(): User[] {
     try {
       const data = fs.readFileSync(this.filePath, 'utf8');
+      console.log('data: ', data);
       return JSON.parse(data);
     } catch (error) {
       console.error(error);
@@ -49,5 +51,10 @@ export class UserService {
 
   getAll(): User[] {
     return this.loadUsers();
+  }
+
+  getByUsername(username: string): User | undefined {
+    const users = this.loadUsers();
+    return users.find((u) => u.username === username);
   }
 }
